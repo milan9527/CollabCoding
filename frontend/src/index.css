@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  overflow: hidden;
+  height: 100vh;
+}
+
+#root {
+  height: 100vh;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #0f172a; }
+::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+/* Cursor label for collaborators */
+.collaborator-cursor {
+  position: absolute;
+  pointer-events: none;
+  z-index: 50;
+}
+.collaborator-cursor-label {
+  font-size: 11px;
+  padding: 1px 6px;
+  border-radius: 3px;
+  color: white;
+  white-space: nowrap;
+  position: absolute;
+  top: -18px;
+  left: 0;
+}

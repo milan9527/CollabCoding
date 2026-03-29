@@ -1,0 +1,9 @@
+fastapi==0.115.0
+uvicorn==0.30.6
+websockets==12.0
+python-dotenv==1.0.1
+boto3>=1.35.0
+bedrock-agentcore
+strands-agents
+strands-agents-tools
+pydantic==2.9.0

@@ -1,0 +1,10 @@
+.vscode/
+__pycache__/
+*.pyc
+.pytest_cache/
+node_modules/
+frontend/dist/
+backend/.env
+backend/.bedrock_agentcore/
+backend/.bedrock_agentcore.yaml
+.DS_Store
