@@ -327,10 +327,11 @@ async def agent_generate(req: AgentRequest):
         normalized_files.append(short)
     files_changed = normalized_files
 
-    # Store agent response in Memory
+    # Store agent response in Memory — under the SAME user's actor_id
+    # so each user has their own private conversation thread
     memory_service.store_conversation_event(
         session_id=session_id,
-        actor_id="agent",
+        actor_id=req.user_id,
         role="assistant",
         content=agent_response,
         space_id=req.space_id,
@@ -392,18 +393,15 @@ async def agent_generate(req: AgentRequest):
 async def get_conversation_history(space_id: str, user_id: str):
     """Retrieve conversation history from AgentCore Memory.
 
-    Fetches both user events and agent events, returns them merged.
+    Each user has their own private conversation thread (both user
+    prompts and agent replies stored under the user's actor_id).
     """
     space = spaces_db.get(space_id)
     if not space:
         raise HTTPException(404, "Space not found")
     session_id = space["session_id"]
-    user_events = memory_service.retrieve_conversation(session_id, user_id)
-    agent_events = memory_service.retrieve_conversation(session_id, "agent")
-    # Merge and sort by timestamp
-    all_events = user_events + agent_events
-    all_events.sort(key=lambda e: e.get("eventTimestamp", ""))
-    return {"events": all_events}
+    events = memory_service.retrieve_conversation(session_id, user_id)
+    return {"events": events}
 
 
 # -- Preview -----------------------------------------------------------------
